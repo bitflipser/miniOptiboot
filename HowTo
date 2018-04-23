@@ -1,5 +1,7 @@
 miniOptiboot is an assembler rewrite of Optiboot to match the minimum bootloader size of ATmega88/168 of 128 words
 
+it is written for 'assembler2' and refers to the 'MCU definitions'.inc files and to Atmels 'macros.inc' for accessing SFR 
+
 beside the assumptions and tricks of Optiboot it needs some more tricks to fit
 
 so miniOptiboot 
@@ -8,7 +10,7 @@ so miniOptiboot
 
 - does not respond a valid SW_MINOR, SW_MAJOR value to the appropriate STK_GET_PARAMETER command (see below)
 
-to setup your configuration step through 1 to 5 then do an assembler run
+to set up your configuration step through 1 to 5 then do an assembler run
 
 if the build does not fit into 128 words then go to steps 6 and 7
 
