@@ -1,6 +1,6 @@
 128 word version of Optiboot for ATmega88/168
 
-rewrite in assembler to make it fit
+rewrite in assembler to make it fit - read HowTo
 
 based on Optiboot (https://github.com/Optiboot/optiboot)                     
 
