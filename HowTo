@@ -1,0 +1,38 @@
+miniOptiboot is an assembler rewrite of Optiboot to match the minimum bootloader size of ATmega88/168 of 128 words
+
+beside the assumptions and tricks of Optiboot it needs some more tricks to fit
+
+so miniOptiboot 
+
+- does not blink LED upon start
+
+- does not respond a valid SW_MINOR, SW_MAJOR value to the appropriate STK_GET_PARAMETER command (see below)
+
+to setup your configuration step through 1 to 5 then do an assembler run
+
+if the build does not fit into 128 words then go to steps 6 and 7
+
+6 - memsaving specials:
+
+- allPARAM_0x14: Optiboot replies a standard 0x03 to all STK_GET_PARAMETER commands beside SW_MINOR, SW_MAJOR ("..enough to keep Avrdude happy"),
+save 1 word by changing this dummy value to 0x14
+
+- noSW_MINOR_MAJOR: it is Optiboot convention to place the version numbers SW_MINOR, SW_MAJOR into the very last FLASH location, 
+save 1 word by circumventing this convention
+
+- allFUSE_LOCK_0x14: (mini)Optiboot does not provide 'read FUSE' and 'read/write LOCK bits' but replies 0x00 to all of these commands, 
+save 1 word by changing this dummy value to 0x14
+
+- overrideSIGNATURE: (mini)Optiboot replies the preset SIGNATURE to the STK_READ_SIGN command, 
+you can save 3 words by sending a '0x14 0x14 0x14' SIGNATURE, but be careful with this, because it requires some 'adjustments' to avrdude!!!!!
+a) run avdude in force mode '-u -F'
+b) modify the entry to your MCU's 'part' entry in 'avrdude.conf' with 'signature       = 0x14 0x14 0x14;'
+c) create a new 'part' entry to your MCU by taking the original one and modifying 'signature       = 0x14 0x14 0x14;'
+
+7 - check baud rates
+
+you can save memspace by selecting a special baud rate (in the range provided by your computer)
+
+- a baud rate that generates a 'Baud = 0x0000' value will save 2 word
+
+- a baud rate that generates a 'doubleSpeed = 0' value will save 1 word
