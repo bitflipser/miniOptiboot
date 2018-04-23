@@ -25,9 +25,12 @@ save 1 word by changing this dummy value to 0x14
 
 - overrideSIGNATURE: (mini)Optiboot replies the preset SIGNATURE to the STK_READ_SIGN command, 
 you can save 3 words by sending a '0x14 0x14 0x14' SIGNATURE, but be careful with this, because it requires some 'adjustments' to avrdude!!!!!
-a) run avdude in force mode '-u -F'
-b) modify the entry to your MCU's 'part' entry in 'avrdude.conf' with 'signature       = 0x14 0x14 0x14;'
-c) create a new 'part' entry to your MCU by taking the original one and modifying 'signature       = 0x14 0x14 0x14;'
+a) run avdude in force mode '-u -F', be cautious to place the right MCU type ('-m...') !!!
+or
+b) modify your MCU's 'part' entry in 'avrdude.conf' with 'signature       = 0x14 0x14 0x14;'
+or
+c) create a new 'part' entry to your MCU by taking the original one and modifying 'signature       = 0x14 0x14 0x14;' and 'id              = "m???";
+
 
 7 - check baud rates
 
@@ -36,3 +39,4 @@ you can save memspace by selecting a special baud rate (in the range provided by
 - a baud rate that generates a 'Baud = 0x0000' value will save 2 word
 
 - a baud rate that generates a 'doubleSpeed = 0' value will save 1 word
+
